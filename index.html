@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" class="dark">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -50,12 +50,17 @@
                     <h1 class="font-bold text-lg tracking-tight flex items-center gap-2">
                         Live Market Coach <span class="text-xs px-2 py-0.5 rounded-full bg-lmc-gold/10 text-lmc-gold border border-lmc-gold/30">Gold Standard</span>
                     </h1>
-                    <p class="text-xs text-lmc-muted">YouTube Research & SEO Automation Studio</p>
+                    <p class="text-xs text-lmc-muted" data-i18n="subtitle">YouTube Research & SEO Automation Studio</p>
                 </div>
             </div>
             <div class="flex items-center gap-3">
-                <span class="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg bg-lmc-border/50 text-lmc-muted border border-lmc-border">
-                    <span class="w-2 h-2 rounded-full bg-lmc-green animate-pulse"></span> System Ready
+                <!-- Language Toggle Button -->
+                <button id="btn-lang-toggle" onclick="toggleLanguage()" class="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg bg-lmc-border/50 hover:bg-lmc-border text-white border border-lmc-border transition-all">
+                    <i data-lucide="globe" class="w-3.5 h-3.5 text-lmc-blue"></i>
+                    <span id="lang-label">RU / EN</span>
+                </button>
+                <span class="hidden sm:inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg bg-lmc-border/50 text-lmc-muted border border-lmc-border">
+                    <span class="w-2 h-2 rounded-full bg-lmc-green animate-pulse"></span> <span data-i18n="sys-ready">System Ready</span>
                 </span>
             </div>
         </div>
@@ -70,7 +75,7 @@
             <!-- Video Upload Card -->
             <div class="bg-lmc-card border border-lmc-border rounded-2xl p-5 shadow-xl">
                 <h2 class="text-sm font-semibold uppercase tracking-wider text-lmc-muted mb-4 flex items-center gap-2">
-                    <i data-lucide="video" class="w-4 h-4 text-lmc-blue"></i> Загрузка видео (MP4 / Shorts)
+                    <i data-lucide="video" class="w-4 h-4 text-lmc-blue"></i> <span data-i18n="upload-title">Video Upload (MP4 / Shorts)</span>
                 </h2>
                 
                 <div id="drop-zone" class="border-2 border-dashed border-lmc-border hover:border-lmc-blue rounded-xl p-8 text-center cursor-pointer transition-all bg-[#050505]/50 group">
@@ -78,8 +83,10 @@
                     <div class="w-12 h-12 rounded-full bg-lmc-blue/10 text-lmc-blue flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
                         <i data-lucide="upload-cloud" class="w-6 h-6"></i>
                     </div>
-                    <p class="text-sm font-medium text-white mb-1">Перетащите MP4 файл сюда или <span class="text-lmc-blue underline">выберите на диске</span></p>
-                    <p class="text-xs text-lmc-muted">Поддерживаются горизонтальные (YouTube) и вертикальные (Shorts) видео</p>
+                    <p class="text-sm font-medium text-white mb-1">
+                        <span data-i18n="drop-text-1">Drag & drop MP4 file here or</span> <span class="text-lmc-blue underline" data-i18n="drop-text-2">browse on disk</span>
+                    </p>
+                    <p class="text-xs text-lmc-muted" data-i18n="drop-sub">Supports horizontal (YouTube) and vertical (Shorts) videos</p>
                 </div>
 
                 <div id="file-info" class="hidden mt-4 p-3 bg-lmc-border/30 rounded-xl flex items-center justify-between">
@@ -87,11 +94,11 @@
                         <i data-lucide="file-video" class="w-5 h-5 text-lmc-gold shrink-0"></i>
                         <span id="file-name" class="text-sm font-medium truncate text-white">filename.mp4</span>
                     </div>
-                    <button id="remove-file" class="text-xs text-red-400 hover:text-red-300">Удалить</button>
+                    <button id="remove-file" class="text-xs text-red-400 hover:text-red-300" data-i18n="remove-btn">Remove</button>
                 </div>
 
                 <button id="btn-transcribe" disabled class="mt-4 w-full py-3 px-4 rounded-xl font-semibold text-sm bg-lmc-blue hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed text-white flex items-center justify-center gap-2 transition-all shadow-lg shadow-lmc-blue/20">
-                    <i data-lucide="wand-2" class="w-4 h-4"></i> Сделать транскрипцию текста
+                    <i data-lucide="wand-2" class="w-4 h-4"></i> <span data-i18n="transcribe-btn">Transcribe Video Text</span>
                 </button>
             </div>
 
@@ -99,14 +106,14 @@
             <div class="bg-lmc-card border border-lmc-border rounded-2xl p-5 shadow-xl flex-1 flex flex-col min-h-[300px]">
                 <div class="flex items-center justify-between mb-3">
                     <h2 class="text-sm font-semibold uppercase tracking-wider text-lmc-muted flex items-center gap-2">
-                        <i data-lucide="file-text" class="w-4 h-4 text-lmc-electric"></i> Расшифровка речи
+                        <i data-lucide="file-text" class="w-4 h-4 text-lmc-electric"></i> <span data-i18n="transcript-title">Speech Transcription</span>
                     </h2>
-                    <button id="copy-transcript" class="text-xs text-lmc-muted hover:text-white flex items-center gap-1 transition-colors">
-                        <i data-lucide="copy" class="w-3.5 h-3.5"><span>Копировать</span></i>
+                    <button id="copy-transcript" onclick="copyElement('transcript-container')" class="text-xs text-lmc-muted hover:text-white flex items-center gap-1 transition-colors">
+                        <i data-lucide="copy" class="w-3.5 h-3.5"></i><span data-i18n="copy-label">Copy</span>
                     </button>
                 </div>
-                <div id="transcript-container" class="flex-1 bg-[#050505] border border-lmc-border/80 rounded-xl p-4 text-sm text-lmc-muted overflow-y-auto max-h-[350px] font-mono leading-relaxed">
-                    Загрузите видео и нажмите «Сделать транскрипцию текста», чтобы получить полную расшифровку речи для дальнейшего SEO-анализа...
+                <div id="transcript-container" class="flex-1 bg-[#050505] border border-lmc-border/80 rounded-xl p-4 text-sm text-lmc-muted overflow-y-auto max-h-[350px] font-mono leading-relaxed" data-i18n-placeholder="transcript-placeholder">
+                    Upload a video and click "Transcribe Video Text" to get the full speech transcript for further SEO analysis...
                 </div>
             </div>
 
@@ -121,49 +128,49 @@
                         <h2 class="text-lg font-bold text-white flex items-center gap-2">
                             <i data-lucide="shield-check" class="w-5 h-5 text-lmc-green"></i> LMC Gold Standard SEO & Research
                         </h2>
-                        <p class="text-xs text-lmc-muted">Автоматический аудит конкурентов, ключевых слов и стандартов YouTube</p>
+                        <p class="text-xs text-lmc-muted" data-i18n="seo-sub">Automatic competitor audit, keyword analysis, and YouTube standards compliance</p>
                     </div>
                     <button id="btn-generate-seo" disabled class="py-2.5 px-5 rounded-xl font-semibold text-sm bg-lmc-gold hover:bg-yellow-500 disabled:opacity-50 disabled:cursor-not-allowed text-black flex items-center gap-2 transition-all shadow-lg shadow-lmc-gold/10">
-                        <i data-lucide="cpu" class="w-4 h-4"></i> Запустить SEO-анализ
+                        <i data-lucide="cpu" class="w-4 h-4"></i> <span data-i18n="seo-btn">Run SEO Analysis</span>
                     </button>
                 </div>
 
                 <!-- Part 1: YouTube Research Report -->
                 <div class="mb-6">
                     <h3 class="text-xs font-bold uppercase tracking-wider text-lmc-blue mb-2 flex items-center gap-1.5">
-                        <i data-lucide="search" class="w-3.5 h-3.5"></i> Часть 1 — YouTube Research Log
+                        <i data-lucide="search" class="w-3.5 h-3.5"></i> <span data-i18n="part1-title">Part 1 — YouTube Research Log</span>
                     </h3>
-                    <div id="research-log" class="bg-[#050505] border border-lmc-border rounded-xl p-4 text-xs font-mono text-lmc-muted space-y-2">
-                        <p class="text-lmc-muted/60">Ожидание загрузки видео и транскрипции для проведения исследования по золотому стандарту LMC...</p>
+                    <div id="research-log" class="bg-[#050505] border border-lmc-border rounded-xl p-4 text-xs font-mono text-lmc-muted space-y-2" data-i18n-placeholder="research-placeholder">
+                        <p class="text-lmc-muted/60">Waiting for video upload and transcription to run LMC Gold Standard research...</p>
                     </div>
                 </div>
 
                 <!-- Part 2: Final Content Output -->
                 <div>
                     <h3 class="text-xs font-bold uppercase tracking-wider text-lmc-green mb-3 flex items-center gap-1.5">
-                        <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Часть 2 — Final Content Package
+                        <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> <span data-i18n="part2-title">Part 2 — Final Content Package</span>
                     </h3>
                     
                     <div class="space-y-4">
                         <!-- Title Selection -->
                         <div class="bg-[#050505] border border-lmc-border rounded-xl p-4">
                             <div class="flex items-center justify-between mb-2">
-                                <label class="text-xs font-semibold text-white uppercase tracking-wider">Оптимальный заголовок (Title)</label>
-                                <button onclick="copyElement('final-title')" class="text-xs text-lmc-blue hover:underline flex items-center gap-1"><i data-lucide="copy" class="w-3 h-3"></i> Копировать</button>
+                                <label class="text-xs font-semibold text-white uppercase tracking-wider" data-i18n="title-label">Optimal Title</label>
+                                <button onclick="copyElement('final-title')" class="text-xs text-lmc-blue hover:underline flex items-center gap-1"><i data-lucide="copy" class="w-3 h-3"></i> <span data-i18n="copy-label">Copy</span></button>
                             </div>
-                            <div id="final-title" class="text-sm font-bold text-white bg-lmc-card/50 p-3 rounded-lg border border-lmc-border">
-                                [Здесь появится итоговый заголовок по критериям LMC]
+                            <div id="final-title" class="text-sm font-bold text-white bg-lmc-card/50 p-3 rounded-lg border border-lmc-border" data-i18n-placeholder="title-placeholder">
+                                [Optimal title based on LMC criteria will appear here]
                             </div>
                         </div>
 
                         <!-- Description -->
                         <div class="bg-[#050505] border border-lmc-border rounded-xl p-4">
                             <div class="flex items-center justify-between mb-2">
-                                <label class="text-xs font-semibold text-white uppercase tracking-wider">Описание (Description — с ключевым словом в первых 160 символах)</label>
-                                <button onclick="copyElement('final-desc')" class="text-xs text-lmc-blue hover:underline flex items-center gap-1"><i data-lucide="copy" class="w-3 h-3"></i> Копировать</button>
+                                <label class="text-xs font-semibold text-white uppercase tracking-wider" data-i18n="desc-label">Description (Keyword within first 160 characters)</label>
+                                <button onclick="copyElement('final-desc')" class="text-xs text-lmc-blue hover:underline flex items-center gap-1"><i data-lucide="copy" class="w-3 h-3"></i> <span data-i18n="copy-label">Copy</span></button>
                             </div>
-                            <div id="final-desc" class="text-xs font-mono text-lmc-muted bg-lmc-card/50 p-3 rounded-lg border border-lmc-border whitespace-pre-line leading-relaxed">
-                                [Здесь появится SEO-описание с призывом к действию и ссылкой https://aitradementor.live/onehourworkday]
+                            <div id="final-desc" class="text-xs font-mono text-lmc-muted bg-lmc-card/50 p-3 rounded-lg border border-lmc-border whitespace-pre-line leading-relaxed" data-i18n-placeholder="desc-placeholder">
+                                [SEO description with call to action and link https://aitradementor.live/onehourworkday will appear here]
                             </div>
                         </div>
 
@@ -171,20 +178,20 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div class="bg-[#050505] border border-lmc-border rounded-xl p-4">
                                 <div class="flex items-center justify-between mb-2">
-                                    <label class="text-xs font-semibold text-white uppercase tracking-wider">Закрепленный комментарий</label>
-                                    <button onclick="copyElement('final-comment')" class="text-xs text-lmc-blue hover:underline flex items-center gap-1"><i data-lucide="copy" class="w-3 h-3"></i> Копировать</button>
+                                    <label class="text-xs font-semibold text-white uppercase tracking-wider" data-i18n="comment-label">Pinned Comment</label>
+                                    <button onclick="copyElement('final-comment')" class="text-xs text-lmc-blue hover:underline flex items-center gap-1"><i data-lucide="copy" class="w-3 h-3"></i> <span data-i18n="copy-label">Copy</span></button>
                                 </div>
-                                <div id="final-comment" class="text-xs text-lmc-muted bg-lmc-card/50 p-3 rounded-lg border border-lmc-border">
-                                    [Закрепленный комментарий с призывом и ссылкой]
+                                <div id="final-comment" class="text-xs text-lmc-muted bg-lmc-card/50 p-3 rounded-lg border border-lmc-border" data-i18n-placeholder="comment-placeholder">
+                                    [Pinned comment with CTA and link]
                                 </div>
                             </div>
                             <div class="bg-[#050505] border border-lmc-border rounded-xl p-4">
                                 <div class="flex items-center justify-between mb-2">
-                                    <label class="text-xs font-semibold text-white uppercase tracking-wider">Теги (Tags)</label>
-                                    <button onclick="copyElement('final-tags')" class="text-xs text-lmc-blue hover:underline flex items-center gap-1"><i data-lucide="copy" class="w-3 h-3"></i> Копировать</button>
+                                    <label class="text-xs font-semibold text-white uppercase tracking-wider" data-i18n="tags-label">Tags</label>
+                                    <button onclick="copyElement('final-tags')" class="text-xs text-lmc-blue hover:underline flex items-center gap-1"><i data-lucide="copy" class="w-3 h-3"></i> <span data-i18n="copy-label">Copy</span></button>
                                 </div>
-                                <div id="final-tags" class="text-xs font-mono text-lmc-muted bg-lmc-card/50 p-3 rounded-lg border border-lmc-border">
-                                    [Теги для YouTube]
+                                <div id="final-tags" class="text-xs font-mono text-lmc-muted bg-lmc-card/50 p-3 rounded-lg border border-lmc-border" data-i18n-placeholder="tags-placeholder">
+                                    [YouTube video tags]
                                 </div>
                             </div>
                         </div>
@@ -199,12 +206,129 @@
 
     <!-- Toast Notification -->
     <div id="toast" class="fixed bottom-6 right-6 bg-lmc-green text-black font-semibold text-xs py-2.5 px-4 rounded-xl shadow-2xl translate-y-20 opacity-0 transition-all duration-300 z-50 flex items-center gap-2">
-        <i data-lucide="check" class="w-4 h-4"></i> <span id="toast-text">Успешно скопировано в буфер обмена!</span>
+        <i data-lucide="check" class="w-4 h-4"></i> <span id="toast-text">Successfully copied to clipboard!</span>
     </div>
 
-    <!-- Script Logic -->
+    <!-- Script Logic & Multilingual Engine -->
     <script>
         lucide.createIcons();
+
+        let currentLang = 'en'; // Default language is English
+
+        const translations = {
+            en: {
+                subtitle: "YouTube Research & SEO Automation Studio",
+                sysReady: "System Ready",
+                uploadTitle: "Video Upload (MP4 / Shorts)",
+                dropText1: "Drag & drop MP4 file here or",
+                dropText2: "browse on disk",
+                dropSub: "Supports horizontal (YouTube) and vertical (Shorts) videos",
+                removeBtn: "Remove",
+                transcribeBtn: "Transcribe Video Text",
+                transcriptTitle: "Speech Transcription",
+                copyLabel: "Copy",
+                transcriptPlaceholder: "Upload a video and click \"Transcribe Video Text\" to get the full speech transcript for further SEO analysis...",
+                seoSub: "Automatic competitor audit, keyword analysis, and YouTube standards compliance",
+                seoBtn: "Run SEO Analysis",
+                part1Title: "Part 1 — YouTube Research Log",
+                researchPlaceholder: "Waiting for video upload and transcription to run LMC Gold Standard research...",
+                part2Title: "Part 2 — Final Content Package",
+                titleLabel: "Optimal Title",
+                titlePlaceholder: "[Optimal title based on LMC criteria will appear here]",
+                descLabel: "Description (Keyword within first 160 characters)",
+                descPlaceholder: "[SEO description with call to action and link https://aitradementor.live/onehourworkday will appear here]",
+                commentLabel: "Pinned Comment",
+                commentPlaceholder: "[Pinned comment with CTA and link]",
+                tagsLabel: "Tags",
+                tagsPlaceholder: "[YouTube video tags]",
+                toastCopied: "Successfully copied to clipboard!",
+                toastTranscribe: "Transcription successfully completed!",
+                toastSeo: "SEO package successfully generated according to LMC standards!",
+                transcribingBtn: "Transcribing...",
+                transcribedBtn: "Transcription Completed",
+                analyzingBtn: "Analyzing...",
+                analyzedBtn: "SEO Analysis Completed",
+                sampleTranscript: "[00:00] Hello traders! Gina Babak here with Live Market Coach.<br>[00:15] Today we are reviewing Micro NASDAQ futures trading at the session open.<br>[00:45] Let's examine key liquidity levels, consolidation zones, and volume imbalances.<br>[01:20] Remember the core One-Hour Workday rule: get in, take your move, and shut down the terminal.<br>[02:05] All details and strategies can be found in our One-Hour Workday Blueprint at aitradementor.live/onehourworkday.",
+                researchLogText: `<p class="text-lmc-green">✓ Official YouTube Creator Academy Guidelines: Title optimized for search intent (under 60 chars), primary keyword placed at the beginning.</p><p class="text-lmc-green">✓ Top Competitors Analysis in "Futures Day Trading" niche: examined 5 successful videos, identified focus on institutional price action and strict risk management.</p><p class="text-lmc-green">✓ Keyword Verification: "Micro NASDAQ Futures Trading" phrase placed within the first 120 characters of the description.</p>`,
+                finalTitleText: "Micro NASDAQ Futures Trading: How to Trade Using the Live Market Coach System",
+                finalDescText: "Micro NASDAQ Futures Trading — breaking down live session setup and key liquidity levels using the Live Market Coach methodology.\n\n⚡ Master the complete One-Hour Workday Blueprint for trading freedom: https://aitradementor.live/onehourworkday\n\nJoin our Discord community for daily practice!",
+                finalCommentText: "What instrument do you trade most often — MNQ or MES? Let me know in the comments! 👇 Grab the full blueprint here: https://aitradementor.live/onehourworkday",
+                finalTagsText: "Micro NASDAQ Futures, MNQ trading, Live Market Coach, futures day trading, prop trading, trading strategy"
+            },
+            ru: {
+                subtitle: "Студия YouTube-исследований и SEO-автоматизации",
+                sysReady: "Система готова",
+                uploadTitle: "Загрузка видео (MP4 / Shorts)",
+                dropText1: "Перетащите MP4 файл сюда или",
+                dropText2: "выберите на диске",
+                dropSub: "Поддерживаются горизонтальные и вертикальные видео",
+                removeBtn: "Удалить",
+                transcribeBtn: "Сделать транскрипцию текста",
+                transcriptTitle: "Расшифровка речи",
+                copyLabel: "Копировать",
+                transcriptPlaceholder: "Загрузите видео и нажмите «Сделать транскрипцию текста», чтобы получить полную расшифровку речи...",
+                seoSub: "Автоматический аудит конкурентов, ключевых слов и стандартов YouTube",
+                seoBtn: "Запустить SEO-анализ",
+                part1Title: "Часть 1 — Журнал YouTube Research",
+                researchPlaceholder: "Ожидание загрузки видео и транскрипции для проведения исследования...",
+                part2Title: "Часть 2 — Итоговый SEO-пакет",
+                titleLabel: "Оптимальный заголовок (Title)",
+                titlePlaceholder: "[Здесь появится итоговый заголовок по критериям LMC]",
+                descLabel: "Описание (Description — с ключевым словом в первых 160 символах)",
+                descPlaceholder: "[Здесь появится SEO-описание с призывом к действию и ссылкой https://aitradementor.live/onehourworkday]",
+                commentLabel: "Закрепленный комментарий",
+                commentPlaceholder: "[Закрепленный комментарий с призывом и ссылкой]",
+                tagsLabel: "Теги (Tags)",
+                tagsPlaceholder: "[Теги для YouTube]",
+                toastCopied: "Успешно скопировано в буфер обмена!",
+                toastTranscribe: "Транскрипция успешно завершена!",
+                toastSeo: "SEO-пакет по стандарту LMC успешно сформирован!",
+                transcribingBtn: "Выполняется транскрипция...",
+                transcribedBtn: "Транскрипция завершена",
+                analyzingBtn: "Исследование...",
+                analyzedBtn: "SEO-анализ выполнен",
+                sampleTranscript: "[00:00] Всем привет, трейдеры! С вами Геннадий Бабак и Live Market Coach.<br>[00:15] Сегодня мы разбираем торговлю Micro NASDAQ фьючерсами на открытии сессии.<br>[00:45] Посмотрим на ключевые уровни ликвидности, зоны проторговки и дисбаланс объемов.<br>[01:20] Помните главное правило One-Hour Workday: зашли, забрали свое движение и закрыли терминал.<br>[02:05] Все подробности и стратегии вы можете найти в нашем One-Hour Workday Blueprint на сайте aitradementor.live/onehourworkday.",
+                researchLogText: `<p class="text-lmc-green">✓ Официальные рекомендации YouTube Creator Academy: Title оптимизирован под поисковый интент, ключевое слово вынесено в начало.</p><p class="text-lmc-green">✓ Анализ топ-конкурентов в нише «Futures Day Trading»: изучено 5 успешных роликов, выявлен акцент на институциональный теханализ.</p><p class="text-lmc-green">✓ Проверка ключевых слов: фраза «Micro NASDAQ Futures Trading» размещена в первых 120 символах описания.</p>`,
+                finalTitleText: "Micro NASDAQ Futures Trading: Как торговать по системе Live Market Coach",
+                finalDescText: "Micro NASDAQ Futures Trading — разбираем реальный сессионный разгон и ключевые уровни ликвидности по методике Live Market Coach.\n\n⚡ Изучите полный план One-Hour Workday Blueprint для свободной торговли: https://aitradementor.live/onehourworkday\n\nПрисоединяйтесь к нашему Discord и сообществу трейдеров для ежедневной практики!",
+                finalCommentText: "Какой инструмент вы торгуете чаще всего — MNQ или MES? Напишите в комментариях! 👇 А полный план можно забрать тут: https://aitradementor.live/onehourworkday",
+                finalTagsText: "Micro NASDAQ Futures, MNQ trading, Live Market Coach, фьючерсный трейдинг, дейтрейдинг, проп трейдинг"
+            }
+        };
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'ru' : 'en';
+            document.documentElement.lang = currentLang;
+            document.getElementById('lang-label').textContent = currentLang === 'en' ? 'RU / EN' : 'EN / RU';
+            
+            // Update static texts
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[currentLang][key]) {
+                    el.textContent = translations[currentLang][key];
+                }
+            });
+
+            // Update placeholders / empty states if not yet processed
+            if (!hasTranscribed) {
+                document.getElementById('transcript-container').innerHTML = translations[currentLang].transcriptPlaceholder;
+            }
+            if (!hasSeoGenerated) {
+                document.getElementById('research-log').innerHTML = `<p class="text-lmc-muted/60">${translations[currentLang].researchPlaceholder}</p>`;
+                document.getElementById('final-title').textContent = translations[currentLang].titlePlaceholder;
+                document.getElementById('final-desc').textContent = translations[currentLang].descPlaceholder;
+                document.getElementById('final-comment').textContent = translations[currentLang].commentPlaceholder;
+                document.getElementById('final-tags').textContent = translations[currentLang].tagsPlaceholder;
+            } else {
+                // Keep generated content updated in current language
+                document.getElementById('transcript-container').innerHTML = translations[currentLang].sampleTranscript;
+                document.getElementById('research-log').innerHTML = translations[currentLang].researchLogText;
+                document.getElementById('final-title').textContent = translations[currentLang].finalTitleText;
+                document.getElementById('final-desc').textContent = translations[currentLang].finalDescText;
+                document.getElementById('final-comment').textContent = translations[currentLang].finalCommentText;
+                document.getElementById('final-tags').textContent = translations[currentLang].finalTagsText;
+            }
+        }
 
         const dropZone = document.getElementById('drop-zone');
         const fileInput = document.getElementById('video-file-input');
@@ -222,6 +346,8 @@
         const toast = document.getElementById('toast');
 
         let uploadedFile = null;
+        let hasTranscribed = false;
+        let hasSeoGenerated = false;
 
         dropZone.addEventListener('click', () => fileInput.click());
         dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('border-lmc-blue'); });
@@ -251,56 +377,55 @@
             dropZone.classList.remove('hidden');
             btnTranscribe.setAttribute('disabled', 'true');
             btnGenerateSeo.setAttribute('disabled', 'true');
-            transcriptContainer.textContent = 'Загрузите видео и нажмите «Сделать транскрипцию текста», чтобы получить полную расшифровку речи для дальнейшего SEO-анализа...';
+            hasTranscribed = false;
+            hasSeoGenerated = false;
+            transcriptContainer.innerHTML = translations[currentLang].transcriptPlaceholder;
+            researchLog.innerHTML = `<p class="text-lmc-muted/60">${translations[currentLang].researchPlaceholder}</p>`;
+            finalTitle.textContent = translations[currentLang].titlePlaceholder;
+            finalDesc.textContent = translations[currentLang].descPlaceholder;
+            finalComment.textContent = translations[currentLang].commentPlaceholder;
+            finalTags.textContent = translations[currentLang].tagsPlaceholder;
         });
 
-        // Transcribe simulation
+        // Transcribe action
         btnTranscribe.addEventListener('click', () => {
-            btnTranscribe.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Выполняется транскрипция...`;
+            btnTranscribe.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> <span>${translations[currentLang].transcribingBtn}</span>`;
             lucide.createIcons();
             btnTranscribe.setAttribute('disabled', 'true');
 
             setTimeout(() => {
-                transcriptContainer.innerHTML = `[00:00] Всем привет, трейдеры! С вами Геннадий Бабак и Live Market Coach.<br>
-[00:15] Сегодня мы разбираем торговлю Micro NASDAQ фьючерсами на открытии сессии.<би>
-[00:45] Посмотрим на ключевые уровни ликвидности, зоны проторговки и дисбаланс объемов.<br>
-[01:20] Помните главное правило One-Hour Workday: зашли, забрали свое движение и закрыли терминал.<br>
-[02:05] Все подробности и стратегии вы можете найти в нашем One-Hour Workday Blueprint на сайте aitradementor.live/onehourworkday.`;
-                
-                btnTranscribe.innerHTML = `<i data-lucide="check" class="w-4 h-4"></i> Транскрипция завершена`;
+                hasTranscribed = true;
+                transcriptContainer.innerHTML = translations[currentLang].sampleTranscript;
+                btnTranscribe.innerHTML = `<i data-lucide="check" class="w-4 h-4"></i> <span>${translations[currentLang].transcribedBtn}</span>`;
                 btnGenerateSeo.removeAttribute('disabled');
                 lucide.createIcons();
-                showToast('Транскрипция успешно завершена!');
+                showToast(translations[currentLang].toastTranscribe);
             }, 1500);
         });
 
         // SEO Generation
         btnGenerateSeo.addEventListener('click', () => {
-            btnGenerateSeo.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Исследование...`;
+            btnGenerateSeo.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> <span>${translations[currentLang].analyzingBtn}</span>`;
             lucide.createIcons();
 
             setTimeout(() => {
-                researchLog.innerHTML = `
-                    <p class="text-lmc-green">✓ Официальные рекомендации YouTube Creator Academy: Title оптимизирован под поисковый интент (до 60 символов), ключевое слово вынесено в начало.</p>
-                    <p class="text-lmc-green">✓ Анализ топ-конкурентов в нише «Futures Day Trading»: изучено 5 успешных роликов, выявлен акцент на институциональный теханализ и строгий риск-менеджмент.</p>
-                    <p class="text-lmc-green">✓ Проверка ключевых слов: фраза «Micro NASDAQ Futures Trading» размещена в первых 120 символах описания.</p>
-                `;
+                hasSeoGenerated = true;
+                researchLog.innerHTML = translations[currentLang].researchLogText;
+                finalTitle.textContent = translations[currentLang].finalTitleText;
+                finalDesc.textContent = translations[currentLang].finalDescText;
+                finalComment.textContent = translations[currentLang].finalCommentText;
+                finalTags.textContent = translations[currentLang].finalTagsText;
 
-                finalTitle.textContent = "Micro NASDAQ Futures Trading: Как торговать по системе Live Market Coach";
-                finalDesc.textContent = `Micro NASDAQ Futures Trading — разбираем реальный сессионный разгон и ключевые уровни ликвидности по методике Live Market Coach.\n\n⚡ Изучите полный план One-Hour Workday Blueprint для свободной торговли: https://aitradementor.live/onehourworkday\n\nПрисоединяйтесь к нашему Discord и сообществу трейдеров для ежедневной практики!`;
-                finalComment.textContent = "Какой инструмент вы торгуете чаще всего — MNQ или MES? Напишите в комментариях! 👇 А полный план можно забрать тут: https://aitradementor.live/onehourworkday";
-                finalTags.textContent = "Micro NASDAQ Futures, MNQ trading, Live Market Coach, фьючерсный трейдинг, дейтрейдинг, проп трейдинг";
-
-                btnGenerateSeo.innerHTML = `<i data-lucide="cpu" class="w-4 h-4"></i> SEO-анализ выполнен`;
+                btnGenerateSeo.innerHTML = `<i data-lucide="cpu" class="w-4 h-4"></i> <span>${translations[currentLang].analyzedBtn}</span>`;
                 lucide.createIcons();
-                showToast('SEO-пакет по стандарту LMC успешно сформирован!');
+                showToast(translations[currentLang].toastSeo);
             }, 1500);
         });
 
         function copyElement(elementId) {
             const text = document.getElementById(elementId).innerText;
             navigator.clipboard.writeText(text).then(() => {
-                showToast('Скопировано в буфер обмена!');
+                showToast(translations[currentLang].toastCopied);
             });
         }
 
